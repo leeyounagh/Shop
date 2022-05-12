@@ -15,8 +15,8 @@ export default function(SpecificComponent ,option,adminRoute =null){
             const NaviGate =useNavigate()
             useEffect(()=>{
                 dispatch(auth()).then(response =>{
-                   if(response.payload.isAuth){
-                       console.log('로그인안됨')
+                   if(!response.payload.isAuth){
+                      
                        if(option){
                         console.log('들어갔니')
                         NaviGate('/login')

@@ -6,13 +6,14 @@ import RegisterPage from './components/RegisterPage/RegisterPage';
 import LoginPage from './components/LoginPage/LoginPage'
 import auth from './hoc/auth';
 import NavBar from './components/NavBar/NavBar';
+import UploadProductPage from './components/UPloadProductPage/UploadProductPage';
 
 function App() {
  
   return (
     <div className="App">
    
-      <div>
+    
         
 
       <NavBar></NavBar>
@@ -27,14 +28,15 @@ function App() {
           </Route>
          <Route exact path='/login/' element={auth(LoginPage,false)}></Route>
 
+         <Route exact path='/product/upload' element={auth(UploadProductPage,true)}></Route>
+
           
          
         </Routes>
       
     
      
-        
-      </div>
+     
    
    
     </div>

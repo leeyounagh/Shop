@@ -1,7 +1,7 @@
 const express =require('express');
 const app = express();
 const port = 5000;
-
+const path = require("path");
 const mongoose =require('mongoose')
 const bodyParser =require('body-parser')
 const cookieParser =require('cookie-parser')
@@ -9,9 +9,17 @@ const {User} =require('./models/User');
 const {auth} =require('./middleware/auth')
 const config = require("./config/key");
 
+app.use('/static', express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(cookieParser())
+app.use(cookieParser());
+app.use('/api/product', require('./routes/product'));
+
+
+app.use(express.static('uploads'));
+
+
+
 mongoose.connect(config.mongoURI
 ).then(()=>console.log('mongoDb connected'))
 .catch(err=>console.log(err))
