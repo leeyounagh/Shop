@@ -27,6 +27,7 @@ const FileUpload = (props) => {
         console.log(response.data);
 
         setImages([...Images,response.data.fileName])
+        props.refreshFunction([...Images,response.data.fileName])
         
            console.log(Images)
       } else {
@@ -38,6 +39,16 @@ const FileUpload = (props) => {
     });
 
   };
+
+  const deleteHandler = (image) =>{
+     const currentIndex = Images.indexOf(image)
+       
+
+     let newImages = [...Images]
+     newImages.splice(currentIndex,1)
+     setImages(newImages)
+     props.refreshFunction(newImages)
+  }
     return (
         <div style ={{display:'flex', justifyContent:'space-between'}}>
            <Dropzone onDrop={dropHandler}>
@@ -54,7 +65,7 @@ const FileUpload = (props) => {
         <div style={{display:'flex',width:'350px',height:'240px',
          overflowX:'scroll'}}> 
           {Images.map((image,index)=>{
-           return( <div key ={index}>
+           return( <div key ={index} onClick={()=>deleteHandler(image)}>
                <img style={{ minWidth: '300px', width: '300px', height: '240px' }}
            src={`http://localhost:5000/${image}`}
         /> 
