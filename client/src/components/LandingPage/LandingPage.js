@@ -4,8 +4,8 @@ import{Col,Card,Row} from 'antd'
 import Meta from 'antd/lib/card/Meta';
 import CheckBox from './Sections/CheckBox';
 import ImageSliider from '../utils/ImageSliider';
-import {continents} from './Sections/Datas'
-
+import {continents,price} from './Sections/Datas'
+import RadioBox from './Sections/RadioBox';
 
 const LandingPage = (props) => {
     
@@ -13,6 +13,8 @@ const LandingPage = (props) => {
    const [Skip,setSkip] =useState(0)
    const [Limit,setLimit] =useState(8)
    const [PostSize, setPostSize] = useState(0)
+   const [Filters,setFilters] =useState({constinents:[],
+        price:[]})
      useEffect(()=>{
          let body ={
              skip:Skip,
@@ -65,9 +67,40 @@ const LandingPage = (props) => {
            </Col>
           )
      })
+     function showFilterResults(Filters){
+        let body = {
+            skip: 0,
+            limit: Limit,
+            filters:Filters
+        }
+        getProducts(body)
+        setSkip(0)
+     }
 
-    const handleFilters = ()=>{
-        
+     const handlePrice = (value) =>{
+           const data =price;
+           let array = [];
+
+           for(let key in data){
+               if(data[key]._id===parseInt(value,10)){
+                      array =data[key].array
+               } 
+           }
+
+           return array
+     }
+
+    const handleFilters = (filter,category)=>{
+         const newFilters = {...Filters}
+         newFilters[category] =filter
+
+         if(category === "price"){
+             let priceValue = handlePrice(filter)
+             newFilters[category] =priceValue
+         }
+
+         showFilterResults(newFilters)
+         setFilters(newFilters)
     }
     return (
         <div style={{
@@ -76,8 +109,15 @@ const LandingPage = (props) => {
            <div style={{textAlign:'center'}}>
            <h2>나만의 중고마켓</h2> 
            </div>
-
-           <CheckBox list = {continents} handleFilters ={filter=>handleFilters(filter,"continents")}></CheckBox>
+             <Row gutter={[16,16]}>
+                  <Col lg={12} xs= {24}>
+                  <CheckBox list = {continents} handleFilters ={filter=>handleFilters(filter,"continents")}></CheckBox>
+                  </Col>
+                  <Col lg={12} xs={24}>
+                      <RadioBox list={price} handleFilters ={filter=>handleFilters(filter,"price")}></RadioBox>
+                  </Col>
+             </Row>
+         
            <Row gutter={[16,16]}>
            {renderCards}
            </Row> 

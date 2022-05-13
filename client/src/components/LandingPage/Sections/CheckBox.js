@@ -6,7 +6,7 @@ const { Panel } = Collapse;
 
 const CheckBox = (props) => {
     const [Checked,setChecked] =useState([])
-   
+    
     function handdleToggle (value){
          //누른것의 Index를 구하고 
           const currentIndex = Checked.indexOf(value)
