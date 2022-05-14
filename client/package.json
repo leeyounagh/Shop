@@ -9,6 +9,7 @@
     "antd": "^4.20.3",
     "axios": "^0.27.2",
     "http-proxy": "^1.18.1",
+    "immer": "^9.0.14",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-dropzone": "^14.2.1",

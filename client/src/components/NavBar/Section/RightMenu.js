@@ -9,10 +9,11 @@ import { useNavigate } from 'react-router-dom';
 
 const RightMenu = (props) => {
   const NaviGate = useNavigate()
-    const user =useSelector(state => state.user)
+    const user =useSelector(state =>  state.user)
+   
     const logoutHandler = () => {
       
-        axios.get(`${USER_SERVER}/logout`).then(response => {
+        axios.get(`/api/users/logout`).then(response => {
           if (response.status === 200) {
             NaviGate("/login");
           } else {

@@ -6,7 +6,7 @@ import CheckBox from './Sections/CheckBox';
 import ImageSliider from '../utils/ImageSliider';
 import {continents,price} from './Sections/Datas'
 import RadioBox from './Sections/RadioBox';
-
+import SearchFeature from './Sections/SearchFeature';
 const LandingPage = (props) => {
     
    const [Products,setProducts] =useState([])
@@ -15,6 +15,7 @@ const LandingPage = (props) => {
    const [PostSize, setPostSize] = useState(0)
    const [Filters,setFilters] =useState({constinents:[],
         price:[]})
+        const [SearchTerm,setSearchTerm] = useState('')
      useEffect(()=>{
          let body ={
              skip:Skip,
@@ -90,6 +91,20 @@ const LandingPage = (props) => {
            return array
      }
 
+     const updateSearchterm = (newSearchTerm) =>{
+       
+
+        let body ={
+            skip:0,
+            limit:Limit,
+            filters:Filters,
+            searchTerm:newSearchTerm
+        }
+        setSkip(0)
+        setSearchTerm(newSearchTerm)
+        getProducts(body)
+     }
+
     const handleFilters = (filter,category)=>{
          const newFilters = {...Filters}
          newFilters[category] =filter
@@ -117,7 +132,13 @@ const LandingPage = (props) => {
                       <RadioBox list={price} handleFilters ={filter=>handleFilters(filter,"price")}></RadioBox>
                   </Col>
              </Row>
-         
+           <div style={{display:'flex',justifyContent:'flex-end',margin:'1rem auto'}}>
+           <SearchFeature
+            refreshFunction={updateSearchterm}></SearchFeature>
+           </div>
+           
+        
+
            <Row gutter={[16,16]}>
            {renderCards}
            </Row> 
