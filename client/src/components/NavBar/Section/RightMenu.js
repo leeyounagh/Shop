@@ -1,20 +1,24 @@
 import React from 'react';
-import { Menu } from 'antd';
-import axios from 'axios';
-import { USER_SERVER } from '../../../Config';
-import { useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom';
 
+
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../../_actions/User_action';
 
 
 const RightMenu = (props) => {
   const NaviGate = useNavigate()
     const user =useSelector(state =>  state.user)
+    const dispatch =useDispatch()
    
     const logoutHandler = () => {
+      let body = {
+        email: null,
+        password: null
+      }
       
-        axios.get(`/api/users/logout`).then(response => {
-          if (response.status === 200) {
+      dispatch(logoutUser(body)).then(response => {
+          if (response.payload.logoutsuccess) {
             NaviGate("/login");
           } else {
             alert('Log Out Failed')
@@ -23,26 +27,25 @@ const RightMenu = (props) => {
       };
       if (user.userData && !user.userData.isAuth) {
         return (
-          <Menu mode={props.mode}>
-            <Menu.Item key="mail">
-              <a href="/login">Signin</a>
-            </Menu.Item>
-            <Menu.Item key="app">
-              <a href="/register">Signup</a>
-            </Menu.Item>
-          </Menu>
+            <span>
+           <a href="/login">Signin</a>
+         
+          <a href="/register">Signup</a>
+            </span>
+         
+          
         )
       } else {
         return (
-          <Menu mode={props.mode}>
-              <Menu.Item key="upload">
-              <a href='/product/upload'>upload</a>
-            </Menu.Item>
-            <Menu.Item key="logout">
-              <a onClick={logoutHandler}>Logout</a>
-            </Menu.Item>
           
-          </Menu>
+              <span>
+                 <a href='/product/upload'>upload</a>
+           <a onClick={logoutHandler}>Logout</a>
+              </span>
+            
+           
+          
+          
         )
       }
 

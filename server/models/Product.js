@@ -17,6 +17,14 @@ const productSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    cart:{
+        type:Array,
+        default:[]
+    },
+    history:{
+        type:Array,
+        default:[]
+    },
     images: {
         type: Array,
         default: []

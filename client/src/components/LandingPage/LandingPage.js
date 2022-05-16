@@ -59,7 +59,7 @@ const LandingPage = (props) => {
          
            return (<Col lg={6} md={8} xs={24} key={index}>
             <Card 
-             cover={<ImageSliider images={product.images}></ImageSliider>}>
+             cover={<a href={`/product/${product._id}`}><ImageSliider images={product.images}></ImageSliider></a>}>
             
                <Meta
                 title={product.title}

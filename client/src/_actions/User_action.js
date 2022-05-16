@@ -1,9 +1,11 @@
 import axios from 'axios';
+
 import {
     LOGIN_USER,
     REGISTER_USER,
     AUTH_USER,
     LOGOUT_USER,
+    ADD_TO_CART
 } from './types';
 export function loginUser(dataToSubmit) {
 
@@ -39,12 +41,26 @@ export function auth() {
 }
 
 
-export function logoutUser(){
-    const request = axios.get('/api/users/logout')
-    .then(response => response.data);
+export function logoutUser(dataToSubmit){
+   const request= axios.get('/api/users/logout')
+    .then(response => response.data,dataToSubmit);
 
     return {
         type: LOGOUT_USER,
         payload: request
-    }
+    } 
 }
+
+export function addtoCart(id){
+    let body= {
+        productId:id
+    }
+ 
+    const request= axios.post('/api/users/addToCart',body)
+    .then(response => response.data);
+
+    return {
+        type:ADD_TO_CART,
+        payload: request
+    } 
+ }
